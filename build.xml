@@ -1,0 +1,95 @@
+<project name="TD-Réflexivité" default="build-zip">
+	<!-- basedir="." = Répertoire "BUILD" contenant ce "build.xml" -->
+
+	<property name="td_version"      value="1.1" />
+	
+	<!-- Definition des repertoire de distribution -->
+	<!--
+	<property name="eclipse_dir"   value="../.." />
+	<property name="root_dir"      value="./root" />
+	-->
+	
+	<property name="java_src"      value="./src" />
+
+	<property name="build_dir"     value="./build" />
+	<property name="build_classes" value="${build_dir}/classes" />
+	
+
+	<property name="dist_dir"      value="./dist" />
+	<property name="jar_file"      value="${dist_dir}/td_reflect-${td_version}.jar" />
+	<property name="zip_file"      value="${dist_dir}/td_reflect-${td_version}.zip" />
+
+	<!-- ============================================================================== -->
+	<!-- Initialisation                                                                 -->
+	<!-- ============================================================================== -->
+	<target name="init">
+		<echo message="ANT  version : ${ant.version}" />
+		<echo message="JAVA version : ${ant.java.version}" />
+
+		<mkdir dir="${build_dir}" />
+		<mkdir dir="${build_classes}" />
+
+		<mkdir dir="${dist_dir}" />
+
+	</target>
+
+
+	<!-- ============================================================================== -->
+	<!-- Compile all the Java classes                                                   -->
+	<!-- ============================================================================== -->
+	<target name="compile" depends="init">
+		
+		<!-- Delete and Create the build directory -->
+		<delete dir="${build_classes}" /> 
+		<mkdir  dir="${build_classes}" />
+		
+		<!-- Compile sources -->
+		<!-- <echo message="javac..."/> 
+		<javac 
+			executable="${java_dir}/bin/javac" classpath="${java_dir}/jre/lib/rt.jar"
+			includeAntRuntime="no"
+			srcdir="${java_src}" destdir="${build_classes}" debug="yes">
+			<classpath>
+				<pathelement location="${tomcat_lib}/servlet.jar" />
+			</classpath>
+		</javac>
+		-->
+
+		<javac 
+			srcdir="${java_src}" destdir="${build_classes}" debug="yes">
+		</javac>
+
+		
+	</target>
+
+	<!-- ============================================================================== -->
+	<!-- Construction des fichiers .JAR                                                   -->
+	<!-- ============================================================================== -->
+	<target name="build-jar" depends="compile">
+
+		<!-- Suppression du fichier JAR s'il existe -->
+		<delete file="${jar_file}" />
+
+		<!-- Génération du JAR à partir du répertoire "classes"  -->
+		<jar destfile="${jar_file}" basedir="${build_classes}" 
+			includes="reflect/lib/td1/**,reflect/lib/td2/** " > <!-- Source du pacage "reflect.lib" ( TD 1 et 2 ) -->
+		</jar>
+
+	</target>
+	
+	<!-- ============================================================================== -->
+	<!-- Release packaging (ZIP)                                                        -->
+	<!-- ============================================================================== -->
+	<target name="build-zip" depends="build-jar">
+		<echo message="build-zip : ZIP FILE = ${zip_file} / JAR FILE = ${jar_file}" />
+		<delete file="${zip_file}" />
+		<zip destfile="${zip_file}"  >	
+			<zipfileset file="${jar_file}"              prefix="lib"/>	
+			<zipfileset dir="${java_src}/main/java/reflect/bean"  prefix="src/main/java/reflect/bean" />	
+			<zipfileset dir="${java_src}/main/java/reflect/td3"   prefix="src/main/java/reflect/td3" />	
+			<zipfileset dir="${java_src}/main/java/reflect/td4"   prefix="src/main/java/reflect/td4" />	
+			<zipfileset dir="${java_src}/main/java/reflect/td5"   prefix="src/main/java/reflect/td5" />	
+		</zip>
+	</target>
+
+</project>
