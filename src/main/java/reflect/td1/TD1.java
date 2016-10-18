@@ -21,6 +21,20 @@ public class TD1 {
 		return c ;
 	}
 	
+	public static void print( Field[] fields ) {
+		for ( Field f : fields ) {
+			int modifiers = f.getModifiers();
+			System.out.println(" . field : " + Modifier.toString(modifiers) + "  " + f.getName() );
+		}
+	}
+	
+	public static void print( Method[] methods ) {
+		for ( Method m : methods ) {
+			int modifiers = m.getModifiers();
+			System.out.println(" . method : " + Modifier.toString(modifiers) + "  " + m.getName() );
+		}
+	}
+
 	public static void describe( Class<?> c) {
 
 		System.out.println( "---" );
@@ -29,26 +43,17 @@ public class TD1 {
 		System.out.println(" . interface ? : " + c.isInterface() );
 		System.out.println(" . array ?     : " + c.isArray() );
 		
-		System.out.println( "--- Fields : " );
-		Field[] fields = c.getFields();
-		for ( Field f : fields ) {
-			int m = f.getModifiers();
-			System.out.println(" . field : " + Modifier.toString(m) + "  " + f.getName() );
-		}
+		System.out.println( "--- getFields : " );
+		print( c.getFields() ) ;
 
-		System.out.println( "--- Declared Fields : " );
-		Field[] declaredFields = c.getDeclaredFields();
-		for ( Field f : declaredFields ) {
-			int m = f.getModifiers();
-			System.out.println(" . field  : " + Modifier.toString(m) + "  " + f.getName()  );
-		}
+		System.out.println( "--- getDeclaredFields : " );
+		print( c.getDeclaredFields() ) ;
 
-		System.out.println( "--- Methods : " );
-		Method[] methods = c.getMethods();
-		for ( Method m : methods ) {
-			int modifiers = m.getModifiers();
-			System.out.println(" . method : " + Modifier.toString(modifiers) + "  " + m.getName() );
-		}
+		System.out.println( "--- getMethods : " );
+		print( c.getMethods() ) ;
+
+		System.out.println( "--- getDeclaredMethods : " );
+		print( c.getDeclaredMethods() ) ;
 
 	}
 
@@ -56,9 +61,11 @@ public class TD1 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		System.out.println("\n========== Book :");
 		Class<?> c = loadClass("reflect.lib.td1.Book");
 		describe ( c );
 		
+		System.out.println("\n========== Factory getObject() :");
 		Factory f = new Factory();
 		Object o = f.getObject();
 		describe ( o.getClass() );

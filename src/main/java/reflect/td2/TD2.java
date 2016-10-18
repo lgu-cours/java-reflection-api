@@ -133,7 +133,7 @@ public class TD2 {
 				System.out.println("Salaire found : type = " + f.getType() );
 				
 				//TODO : cf SecurityManager
-				//f.setAccessible(true);
+				f.setAccessible(true);
 				
 				double val = 0 ;
 				try {
