@@ -3,6 +3,7 @@ package reflect.td1;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Type;
 
 import reflect.lib.td1.Factory;
 
@@ -32,6 +33,9 @@ public class TD1 {
 		for ( Method m : methods ) {
 			int modifiers = m.getModifiers();
 			System.out.println(" . method : " + Modifier.toString(modifiers) + "  " + m.getName() );
+			for ( Type type : m.getGenericParameterTypes() ) {
+				System.out.println("   . type : " + type );
+			}
 		}
 	}
 
