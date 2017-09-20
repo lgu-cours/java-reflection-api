@@ -5,9 +5,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 
-import reflect.lib.td1.Factory;
+import reflect.lib.td1.Book;
 
-public class TD1 {
+public class TD1bis {
 
 	public static Class<?> loadClass(String sClassName) {
 		Class<?> c = null ;
@@ -68,13 +68,46 @@ public class TD1 {
 		Class<?> c = loadClass("reflect.lib.td1.Book");
 		describe ( c );
 
-		// Classe inexistante => erreur 
-		//c = loadClass("reflect.lib.td1.MyInexistantClass");
+		findField(c, "_sTitle") ;
 		
-		System.out.println("\n========== Factory getObject() :");
-		Factory f = new Factory();
-		Object o = f.getObject();
-		describe ( o.getClass() );
+		Book book = new Book();
+		System.out.println("----------");
+		System.out.println("book title : " + book.getTitle());
+		setFieldValue(book, "_sTitle", "Germinal");
+		System.out.println("book title : " + book.getTitle());
+		
 	}
 
+	private static Field findField(Class<?> c, String fieldName) {
+		System.out.println("Find ... : " + fieldName);
+		try {
+			//Field field = c.getField(fieldName);
+			Field field = c.getDeclaredField(fieldName);
+			System.out.println("Field found");
+			return field ;
+		} catch (NoSuchFieldException e) {
+			System.out.println("Field not found : NoSuchFieldException");
+			return null ;
+		} catch (SecurityException e) {
+			System.out.println("Field error : SecurityException ");
+			return null ;
+		}
+	}
+	private static boolean setFieldValue(Object obj, String fieldName, String val) {
+		try {
+			Class<?> c = obj.getClass();
+			Field field = c.getDeclaredField(fieldName);
+			if ( field != null ) {
+				System.out.println("Field found");
+				field.setAccessible(true);
+				field.set(obj, val);
+				return true;
+			}
+			else {
+				return false ;
+			}
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e ) {
+			throw new RuntimeException(e);
+		}
+	}
 }
