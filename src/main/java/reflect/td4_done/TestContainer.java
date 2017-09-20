@@ -3,8 +3,20 @@ package reflect.td4_done;
 import reflect.bean.Chat;
 import reflect.bean.Chien;
 import reflect.bean.Voiture;
+import reflect.td4.Container;
 
 public class TestContainer {
+	
+	private static void searchObject(ContainerDone container, String name) {
+		System.out.println("\nSearching '" + name + "' in container...");
+		Object o = container.getBean(name);
+		if ( o != null ) {
+			System.out.println("Found : class is " + o.getClass().getCanonicalName() );
+		}
+		else {
+			System.out.println("Not found :-(");
+		}
+	}
 
 	private static void printValue(ContainerDone container, String s)
 	{
@@ -27,6 +39,10 @@ public class TestContainer {
 		container.addBean("chat", new Chat("felix"));
 		container.addBean("voiture", new Voiture("Peugeot", "205", 1995, 1234.50 ));
 		
+		searchObject(container, "chien");
+		searchObject(container, "voiture");
+		searchObject(container, "aaaaaaa");
+
 		printValue(container, "chien.name");
 		printValue(container, "voiture.prix");
 		printValue(container, "voiture.modele");

@@ -8,13 +8,25 @@ public class ContainerDone {
 
 	private Hashtable<String,Object> beans = new Hashtable<String,Object>();
 		
-	public void addBean(String name, Object bean)
-	{
+	/**
+	 * Adds a BEAN in the container
+	 * @param name
+	 * @param bean
+	 */
+	public void addBean(String name, Object bean) {
 		beans.put(name, bean);
 	}
-	
-	public Object getValue(String name )
-	{
+
+	/**
+	 * Returns the BEAN for the given name
+	 * @param name
+	 * @return the BEAN if found or null if not found
+	 */
+	public Object getBean(String name) {
+		return beans.get(name);
+	}
+
+	public Object getValue(String name ) {
 		System.out.println("getValue(" + name + ")");
 		// 1) isoler le nom du bean et le nom de l'attribut 
 		// ex "chien.name" --> "chien" & "name" 
