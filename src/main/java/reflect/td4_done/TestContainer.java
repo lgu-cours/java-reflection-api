@@ -3,7 +3,6 @@ package reflect.td4_done;
 import reflect.bean.Chat;
 import reflect.bean.Chien;
 import reflect.bean.Voiture;
-import reflect.td4.Container;
 
 public class TestContainer {
 	

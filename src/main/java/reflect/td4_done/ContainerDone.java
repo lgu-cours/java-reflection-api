@@ -18,7 +18,8 @@ public class ContainerDone {
 	}
 
 	/**
-	 * Returns the BEAN for the given name
+	 * Returns the BEAN for the given name <br>
+	 * ( Method added in Version 2 )
 	 * @param name
 	 * @return the BEAN if found or null if not found
 	 */
